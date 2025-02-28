@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Search Focus",
+  "version": "1.0",
+  "description": "Focus on search input with keyboard shortcut",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["index.js"]
+    }
+  ],
+  "commands": {
+    "focus-search": {
+      "suggested_key": {
+        "default": "Ctrl+K",
+        "mac": "Command+K"
+      },
+      "description": "Focus on search input"
+    }
+  }
+}
