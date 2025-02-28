@@ -30,11 +30,15 @@ function findSearchInput(): HTMLElement | null {
     'input[role="combobox"]',
     'input[aria-label*="hae" i]',  // Finnish word for search
     'input[placeholder*="hae" i]',  // Finnish variant
-    // Add these new selectors
     '.search-input',  // Common class name for search inputs
     '.form-search-header input',  // Parent container pattern
     '#site-search input',  // Common ID pattern
-    'form.search-input-form input'  // Form with search-specific class
+    'form.search-input-form input',  // Form with search-specific class
+    'input[name="field-keywords"]',  // Common on e-commerce sites
+    'form[name="site-search"] input',  // Forms specifically named for site search
+    '[id*="searchbar"] input',  // Common ID pattern for search containers
+    '[id*="nav-search"] input',  // Common navigation search pattern
+    'form.ng-valid input[type="text"]'  // Angular forms with validation classes
   ];
 
   for (const selector of selectors) {
