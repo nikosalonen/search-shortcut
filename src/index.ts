@@ -13,25 +13,25 @@ style.textContent = `
       box-shadow: 
         0 0 5px #fff,
         0 0 10px #fff,
-        0 0 15px #0ff,
-        0 0 20px #0ff,
-        0 0 25px #0ff;
+        0 0 15px #f0f,
+        0 0 20px #f0f,
+        0 0 25px #f0f;
     }
     50% {
       box-shadow: 
         0 0 10px #fff,
         0 0 20px #fff,
-        0 0 30px #0ff,
-        0 0 40px #0ff,
-        0 0 50px #0ff;
+        0 0 30px #f0f,
+        0 0 40px #f0f,
+        0 0 50px #f0f;
     }
     100% {
       box-shadow: 
         0 0 5px #fff,
         0 0 10px #fff,
-        0 0 15px #0ff,
-        0 0 20px #0ff,
-        0 0 25px #0ff;
+        0 0 15px #f0f,
+        0 0 20px #f0f,
+        0 0 25px #f0f;
     }
   }
 `;
