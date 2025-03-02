@@ -50,5 +50,5 @@ Niko Salonen
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome. Especially for adding support for more websites and languages. For major changes, please open an issue first to discuss what you would like to change.
 
