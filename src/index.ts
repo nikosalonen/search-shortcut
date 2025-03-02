@@ -1,5 +1,42 @@
 // Browser extension to focus on search inputs with keyboard shortcut
 
+// Add CSS for the glow effect
+const style = document.createElement('style');
+style.textContent = `
+  .search-focus-glow {
+    animation: neonGlow 1s ease-out;
+    outline: none;
+  }
+  
+  @keyframes neonGlow {
+    0% {
+      box-shadow: 
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 15px #0ff,
+        0 0 20px #0ff,
+        0 0 25px #0ff;
+    }
+    50% {
+      box-shadow: 
+        0 0 10px #fff,
+        0 0 20px #fff,
+        0 0 30px #0ff,
+        0 0 40px #0ff,
+        0 0 50px #0ff;
+    }
+    100% {
+      box-shadow: 
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 15px #0ff,
+        0 0 20px #0ff,
+        0 0 25px #0ff;
+    }
+  }
+`;
+document.head.appendChild(style);
+
 // Content script that runs on web pages
 document.addEventListener('keydown', (event) => {
   // Check for Ctrl+K or Cmd+K (common search shortcut)
@@ -11,8 +48,13 @@ document.addEventListener('keydown', (event) => {
 
     if (searchInput) {
       searchInput.focus();
+      // Add glow effect class
+      searchInput.classList.add('search-focus-glow');
+      // Remove the class after animation completes
+      setTimeout(() => {
+        searchInput.classList.remove('search-focus-glow');
+      }, 1000);
     }
-
   }
 });
 
