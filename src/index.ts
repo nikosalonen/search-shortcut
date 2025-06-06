@@ -4,34 +4,79 @@
 const style = document.createElement('style');
 style.textContent = `
   .search-focus-glow {
-    animation: neonGlow 1s ease-out;
+    position: relative;
+    animation: neonPulse 2s ease-in-out;
     outline: none;
   }
   
-  @keyframes neonGlow {
+  .search-focus-glow::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(
+      45deg,
+      #ff00ff,
+      #9d00ff,
+      #ff00ff,
+      #9d00ff
+    );
+    background-size: 400% 400%;
+    animation: rotateGradient 2s linear infinite;
+    z-index: -1;
+    border-radius: 4px;
+  }
+  
+  .search-focus-glow::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    border-radius: 2px;
+    z-index: -1;
+  }
+  
+  @keyframes rotateGradient {
+    0% {
+      background-position: 0% 0%;
+    }
+    25% {
+      background-position: 100% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    75% {
+      background-position: 0% 100%;
+    }
+    100% {
+      background-position: 0% 0%;
+    }
+  }
+
+  @keyframes neonPulse {
     0% {
       box-shadow: 
-        0 0 5px #fff,
-        0 0 10px #fff,
-        0 0 15px #f0f,
-        0 0 20px #f0f,
-        0 0 25px #f0f;
+        0 0 5px #ff00ff,
+        0 0 10px #ff00ff,
+        0 0 15px #9d00ff;
     }
     50% {
       box-shadow: 
-        0 0 10px #fff,
-        0 0 20px #fff,
-        0 0 30px #f0f,
-        0 0 40px #f0f,
-        0 0 50px #f0f;
+        0 0 10px #ff00ff,
+        0 0 20px #ff00ff,
+        0 0 30px #9d00ff;
     }
     100% {
       box-shadow: 
-        0 0 5px #fff,
-        0 0 10px #fff,
-        0 0 15px #f0f,
-        0 0 20px #f0f,
-        0 0 25px #f0f;
+        0 0 5px #ff00ff,
+        0 0 10px #ff00ff,
+        0 0 15px #9d00ff;
     }
   }
 `;
