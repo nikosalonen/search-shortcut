@@ -35,7 +35,12 @@ style.textContent = `
     }
   }
 `;
-document.head.appendChild(style);
+
+try {
+  document.head.appendChild(style);
+} catch (error) {
+  console.error('Failed to add search shortcut styles:', error);
+}
 
 // Content script that runs on web pages
 document.addEventListener('keydown', (event) => {
@@ -50,10 +55,13 @@ document.addEventListener('keydown', (event) => {
       searchInput.focus();
       // Add glow effect class
       searchInput.classList.add('search-focus-glow');
-      // Remove the class after animation completes
-      setTimeout(() => {
+      
+      // Remove the class after animation completes using animationend event
+      const removeGlow = () => {
         searchInput.classList.remove('search-focus-glow');
-      }, 1000);
+        searchInput.removeEventListener('animationend', removeGlow);
+      };
+      searchInput.addEventListener('animationend', removeGlow);
     }
   }
 });
@@ -83,10 +91,32 @@ function findSearchInput(): HTMLElement | null {
     'form.ng-valid input[type="text"]'  // Angular forms with validation classes
   ];
 
+  // First try to find visible search inputs
+  for (const selector of selectors) {
+    const elements = document.querySelectorAll(selector);
+    for (const element of elements) {
+      const htmlElement = element as HTMLElement;
+      if (htmlElement && isElementVisible(htmlElement)) {
+        return htmlElement;
+      }
+    }
+  }
+
+  // If no visible search input is found, return the first match
   for (const selector of selectors) {
     const element = document.querySelector(selector) as HTMLElement;
     if (element) return element;
   }
 
   return null;
+}
+
+// Helper function to check if an element is visible
+function isElementVisible(element: HTMLElement): boolean {
+  const style = window.getComputedStyle(element);
+  return style.display !== 'none' && 
+         style.visibility !== 'hidden' && 
+         style.opacity !== '0' &&
+         element.offsetWidth > 0 &&
+         element.offsetHeight > 0;
 }
