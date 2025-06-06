@@ -19,7 +19,7 @@
   "devDependencies": {
     "@types/node": "^22",
     "nodemon": "^3.0.1",
-    "typescript": "^5.3.2",
+    "typescript": "^5.8.3",
       "esbuild": "^0.25.0"
   }
 }
