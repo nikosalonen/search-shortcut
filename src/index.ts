@@ -70,25 +70,113 @@ document.addEventListener('keydown', (event) => {
 function findSearchInput(): HTMLElement | null {
   // Try various selectors that commonly identify search inputs
   const selectors = [
+    // Standard HTML5 and ARIA patterns
     'input[type="search"]',
-    'input[name="search"]',
-    'input[id*="search"]',
-    'input[class*="search"]',
-    'input[placeholder*="search" i]',
-    'input[aria-label*="search" i]',
-    'form[role="search"] input[type="text"]',
+    'input[role="search"]',
     'input[role="combobox"]',
+    'input[aria-label*="search" i]',
     'input[aria-label*="hae" i]',  // Finnish word for search
+    'input[aria-label*="sök" i]',  // Swedish word for search
+    'input[aria-label*="suche" i]', // German word for search
+    'input[aria-label*="recherche" i]', // French word for search
+    'input[aria-label*="buscar" i]', // Spanish word for search
+    
+    // Common input attributes
+    'input[name*="search" i]',
+    'input[id*="search" i]',
+    'input[class*="search" i]',
+    'input[placeholder*="search" i]',
     'input[placeholder*="hae" i]',  // Finnish variant
-    '.search-input',  // Common class name for search inputs
-    '.form-search-header input',  // Parent container pattern
-    '#site-search input',  // Common ID pattern
-    'form.search-input-form input',  // Form with search-specific class
-    'input[name="field-keywords"]',  // Common on e-commerce sites
-    'form[name="site-search"] input',  // Forms specifically named for site search
-    '[id*="searchbar"] input',  // Common ID pattern for search containers
-    '[id*="nav-search"] input',  // Common navigation search pattern
-    'form.ng-valid input[type="text"]'  // Angular forms with validation classes
+    'input[placeholder*="etsi" i]', // Finnish variant
+    'input[placeholder*="sök" i]',  // Swedish variant
+    'input[placeholder*="suche" i]', // German variant
+    'input[placeholder*="recherche" i]', // French variant
+    'input[placeholder*="buscar" i]', // Spanish variant
+    'input[type="text"][name*="q" i]',
+    'input[type="text"][name*="query" i]',
+    'input[type="text"][name*="s" i]',
+    'input[type="text"][name*="search" i]',
+    
+    // Common form patterns
+    'form[role="search"] input',
+    'form[name*="search" i] input',
+    'form[class*="search" i] input',
+    'form[action*="search" i] input',
+    'form[method="get"] input[type="text"]',
+    'form[action*="search" i] input[type="text"]',
+    'form[action*="query" i] input[type="text"]',
+    
+    // Common wrapper patterns
+    '[class*="search"] input',
+    '[id*="search"] input',
+    '[role="search"] input',
+    '[class*="search-bar"] input',
+    '[class*="searchbox"] input',
+    '[class*="search-box"] input',
+    '[class*="searchform"] input',
+    '[class*="search-form"] input',
+    '[class*="searchfield"] input',
+    '[class*="search-field"] input',
+    
+    // Common class names
+    '.search-input',
+    '.search-field',
+    '.search-box',
+    '.search-form input',
+    '.searchbar input',
+    '.search-bar input',
+    '.searchbox input',
+    '.search-box input',
+    '.searchform input',
+    '.search-form input',
+    '.searchfield input',
+    '.search-field input',
+    
+    // Common data attributes
+    '[data-testid*="search" i] input',
+    '[data-test*="search" i] input',
+    '[data-cy*="search" i] input',  // Cypress testing
+    '[data-testid*="query" i] input',
+    '[data-test*="query" i] input',
+    '[data-cy*="query" i] input',
+    
+    // Common e-commerce patterns
+    'input[name="field-keywords"]',
+    'input[name="q"]',
+    'input[name="query"]',
+    'input[name="search_query"]',
+    'input[name="searchTerm"]',
+    'input[name="searchterm"]',
+    'input[name="search_query"]',
+    'input[name="searchQuery"]',
+    
+    // Framework specific patterns
+    // React
+    'form[class*="react-search"] input',
+    '[class*="react-search"] input',
+    '[data-reactroot] input[type="search"]',
+    // Angular
+    'form.ng-valid input[type="text"]',
+    'form[class*="ng-"] input[type="search"]',
+    '[class*="ng-search"] input',
+    // Vue
+    'form[class*="vue-search"] input',
+    '[class*="vue-search"] input',
+    // Next.js
+    '[class*="next-search"] input',
+    '[data-nextjs*="search"] input',
+    // Svelte
+    '[class*="svelte-search"] input',
+    // Generic framework
+    'form[class*="search"] input',
+    'form[data-*="search"] input',
+    // Common UI frameworks
+    '[class*="ant-input-search"] input',  // Ant Design
+    '[class*="mui-search"] input',        // Material-UI
+    '[class*="bootstrap-search"] input',  // Bootstrap
+    '[class*="chakra-search"] input',     // Chakra UI
+    '[class*="tailwind-search"] input',   // Tailwind
+    '[class*="bulma-search"] input'       // Bulma
   ];
 
   // First try to find visible search inputs
