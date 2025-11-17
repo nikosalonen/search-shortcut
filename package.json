@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@types/node": "^22",
-    "nodemon": "^3.1.10",
+    "nodemon": "^3.1.11",
     "typescript": "^5.8.3",
       "esbuild": "^0.25.5"
   }
