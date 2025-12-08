@@ -20,6 +20,6 @@
     "@types/node": "^22",
     "nodemon": "^3.1.10",
     "typescript": "^5.8.3",
-      "esbuild": "^0.25.5"
+      "esbuild": "^0.27.1"
   }
 }
