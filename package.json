@@ -15,7 +15,7 @@
   "description": "Search shortcut browser extension",
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "~24",
+    "@types/node": "~25",
     "nodemon": "^3.1.14",
     "typescript": "^5.9.3",
     "esbuild": "^0.27.3"
