@@ -9,6 +9,8 @@ async function build() {
     outdir: 'dist',
     platform: 'browser',
     format: 'iife',
+    target: 'es2017',
+    minify: true,
   });
 
   // Copy manifest

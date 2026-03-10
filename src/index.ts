@@ -1,82 +1,21 @@
 // Browser extension to focus on search inputs with keyboard shortcut
 
-// Add CSS for the glow effect
+// Add CSS for the pulse effect
 const style = document.createElement('style');
 style.textContent = `
-  .search-focus-glow {
-    position: relative;
-    animation: neonPulse 2s ease-in-out;
+  .search-focus-pulse {
+    animation: searchPulse 0.4s ease-in-out 3;
     outline: none;
   }
-  
-  .search-focus-glow::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(
-      45deg,
-      #ff00ff,
-      #9d00ff,
-      #ff00ff,
-      #9d00ff
-    );
-    background-size: 400% 400%;
-    animation: rotateGradient 2s linear infinite;
-    z-index: -1;
-    border-radius: 4px;
-  }
-  
-  .search-focus-glow::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: inherit;
-    border-radius: 2px;
-    z-index: -1;
-  }
-  
-  @keyframes rotateGradient {
-    0% {
-      background-position: 0% 0%;
-    }
-    25% {
-      background-position: 100% 0%;
-    }
-    50% {
-      background-position: 100% 100%;
-    }
-    75% {
-      background-position: 0% 100%;
-    }
-    100% {
-      background-position: 0% 0%;
-    }
-  }
 
-  @keyframes neonPulse {
-    0% {
-      box-shadow: 
-        0 0 5px #ff00ff,
-        0 0 10px #ff00ff,
-        0 0 15px #9d00ff;
+  @keyframes searchPulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(157, 0, 255, 0);
     }
     50% {
-      box-shadow: 
-        0 0 10px #ff00ff,
-        0 0 20px #ff00ff,
-        0 0 30px #9d00ff;
-    }
-    100% {
-      box-shadow: 
-        0 0 5px #ff00ff,
-        0 0 10px #ff00ff,
-        0 0 15px #9d00ff;
+      box-shadow:
+        0 0 8px 2px #ff00ff,
+        0 0 16px 4px #9d00ff;
     }
   }
 `;
@@ -98,15 +37,14 @@ document.addEventListener('keydown', (event) => {
 
     if (searchInput) {
       searchInput.focus();
-      // Add glow effect class
-      searchInput.classList.add('search-focus-glow');
-      
-      // Remove the class after animation completes using animationend event
-      const removeGlow = () => {
-        searchInput.classList.remove('search-focus-glow');
-        searchInput.removeEventListener('animationend', removeGlow);
+
+      searchInput.classList.add('search-focus-pulse');
+
+      const removePulse = () => {
+        searchInput.classList.remove('search-focus-pulse');
+        searchInput.removeEventListener('animationend', removePulse);
       };
-      searchInput.addEventListener('animationend', removeGlow);
+      searchInput.addEventListener('animationend', removePulse);
     }
   }
 });
@@ -220,33 +158,9 @@ function findSearchInput(): HTMLElement | null {
     // Finnish-specific patterns
     'input[aria-label="Haku"]',
 
-    // Framework specific patterns
-    // React
-    'form[class*="react-search"] input',
-    '[class*="react-search"] input',
-    '[data-reactroot] input[type="search"]',
-    // Angular
-    'form.ng-valid input[type="text"]',
-    'form[class*="ng-"] input[type="search"]',
-    '[class*="ng-search"] input',
-    // Vue
-    'form[class*="vue-search"] input',
-    '[class*="vue-search"] input',
-    // Next.js
-    '[class*="next-search"] input',
-    '[data-nextjs*="search"] input',
-    // Svelte
-    '[class*="svelte-search"] input',
-    // Generic framework
+    // Generic and UI framework patterns
     'form[class*="search"] input',
-    'form[data-*="search"] input',
-    // Common UI frameworks
-    '[class*="ant-input-search"] input',  // Ant Design
-    '[class*="mui-search"] input',        // Material-UI
-    '[class*="bootstrap-search"] input',  // Bootstrap
-    '[class*="chakra-search"] input',     // Chakra UI
-    '[class*="tailwind-search"] input',   // Tailwind
-    '[class*="bulma-search"] input'       // Bulma
+    '[class*="ant-input-search"] input'  // Ant Design
   ];
 
   // First try to find visible search inputs
