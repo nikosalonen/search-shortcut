@@ -133,6 +133,7 @@ function findSearchInput(): HTMLElement | null {
     'input[placeholder*="search" i]',
     'input[placeholder*="hae" i]',  // Finnish variant
     'input[placeholder*="etsi" i]', // Finnish variant
+    'input[placeholder*="hakusana" i]', // Finnish word for search term
     'input[placeholder*="sök" i]',  // Swedish variant
     'input[placeholder*="suche" i]', // German variant
     'input[placeholder*="recherche" i]', // French variant
@@ -149,11 +150,19 @@ function findSearchInput(): HTMLElement | null {
     'form[action*="search" i] input',
     'form[method="get"] input[type="text"]',
     'form[action*="search" i] input[type="text"]',
+    'form[action*="/search"] input',
+    'form[action*="/haku"] input',  // Finnish search action
     'form[action*="query" i] input[type="text"]',
-    
+    'form[name="site-search"] input',
+    'form.search-input-form input',
+    'form.searchform input',
+
     // Common wrapper patterns
     '[class*="search"] input',
     '[id*="search"] input',
+    '[id*="searchbar"] input',
+    '[id*="searchform"] input',
+    '[id*="nav-search"] input',
     '[role="search"] input',
     '[class*="search-bar"] input',
     '[class*="searchbox"] input',
@@ -176,7 +185,13 @@ function findSearchInput(): HTMLElement | null {
     '.search-form input',
     '.searchfield input',
     '.search-field input',
-    
+    '.form-search-header input',
+    '.search-trigger__input',
+    '.menu-search button',
+    '.form-keyword input',
+    '.input-container input[type="text"]',
+    '#site-search input',
+
     // Common data attributes
     '[data-testid*="search" i] input',
     '[data-test*="search" i] input',
@@ -192,9 +207,19 @@ function findSearchInput(): HTMLElement | null {
     'input[name="search_query"]',
     'input[name="searchTerm"]',
     'input[name="searchterm"]',
-    'input[name="search_query"]',
     'input[name="searchQuery"]',
-    
+    'input[name="s"]',  // WordPress search
+    'input[name="keyword"]',
+
+    // Button and icon patterns
+    'button[aria-label*="search" i]',
+    'button[aria-label*="hae" i]',
+    'svg[icon-name*="search"] ~ input',
+    'label:has(svg[icon-name*="search"]) input',
+
+    // Finnish-specific patterns
+    'input[aria-label="Haku"]',
+
     // Framework specific patterns
     // React
     'form[class*="react-search"] input',

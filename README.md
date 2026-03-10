@@ -41,8 +41,9 @@ The extension uses a comprehensive set of selectors to find search inputs on web
 - Standard HTML5 search inputs
 - Common naming patterns (id, class, name attributes)
 - Accessibility attributes (aria-label)
-- International support (including Finnish word "hae")
-- Common framework patterns (Angular forms)
+- International support (Finnish, Swedish, German, French, Spanish)
+- Framework patterns (React, Angular, Vue, Next.js, Svelte)
+- UI framework patterns (Ant Design, Material-UI, Bootstrap, Chakra UI, Tailwind, Bulma)
 - E-commerce specific patterns
 - Various container patterns and form structures
 
@@ -64,15 +65,23 @@ npm install
 
 # Build the extension
 npm run build
+
+# Dev mode (watch + Firefox live reload)
+npm run dev
 ```
 
 ### Project Structure
 ```
 search-shortcut/
 ├── src/
-│   └── index.ts      # Main extension code
-├── dist/             # Built extension files
-└── README.md
+│   └── index.ts       # Main extension code (content script)
+├── dist/              # Built extension files (load this as unpacked extension)
+├── build.js           # esbuild bundler config
+├── manifest.json      # Extension manifest (V3)
+└── .github/
+    ├── dependabot.yml # Automated dependency updates
+    └── workflows/
+        └── ci.yml     # Build verification on PRs
 ```
 
 ## Contributing
