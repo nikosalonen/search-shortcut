@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Search Focus",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "Focus on search input with keyboard shortcut",
   "content_scripts": [
     {
@@ -9,13 +9,12 @@
       "js": ["index.js"]
     }
   ],
-  "commands": {
-    "focus-search": {
-      "suggested_key": {
-        "default": "Ctrl+K",
-        "mac": "Command+K"
-      },
-      "description": "Focus on search input"
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "search-shortcut@nikosalonen",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
     }
   }
 }

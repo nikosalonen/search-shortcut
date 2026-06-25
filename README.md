@@ -16,18 +16,18 @@ A lightweight browser extension that enhances your web browsing experience by pr
 ### Chrome/Edge/Brave
 1. Download the extension from the Chrome Web Store (coming soon)
 2. Or install manually:
-   - Clone this repository
+   - Clone this repository, then run `npm install && npm run build` to generate the `dist/` folder
    - Open Chrome/Edge/Brave and go to `chrome://extensions/`
    - Enable "Developer mode"
-   - Click "Load unpacked" and select the extension directory
+   - Click "Load unpacked" and select the `dist/` folder
 
 ### Firefox
 1. Download from Firefox Add-ons (coming soon)
 2. Or install manually:
-   - Clone this repository
+   - Clone this repository, then run `npm install && npm run build` to generate the `dist/` folder
    - Open Firefox and go to `about:debugging#/runtime/this-firefox`
    - Click "Load Temporary Add-on"
-   - Select any file in the extension directory
+   - Select `dist/manifest.json`
 
 ## Usage
 
