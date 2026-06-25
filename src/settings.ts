@@ -75,7 +75,11 @@ export function loadSettings(): Promise<Settings> {
 
 export function saveSettings(s: Settings): Promise<void> {
   return new Promise((resolve) => {
-    chrome.storage.local.set({ [STORAGE_KEY]: s }, () => resolve());
+    try {
+      chrome.storage.local.set({ [STORAGE_KEY]: s }, () => resolve());
+    } catch {
+      resolve();
+    }
   });
 }
 
@@ -85,6 +89,7 @@ export function onSettingsChanged(cb: (s: Settings) => void): void {
     const change = changes[STORAGE_KEY];
     if (!change) return;
     const next = change.newValue as Settings | undefined;
+    // Ignore writes that don't parse/validate; keep the last-known-good settings.
     if (next && validate(next)) cb(next);
   });
 }
