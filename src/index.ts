@@ -4,7 +4,7 @@
 const style = document.createElement('style');
 style.textContent = `
   .search-focus-pulse {
-    animation: searchPulse 0.4s ease-in-out 3;
+    animation: searchPulse 0.5s ease-in-out 1;
     outline: none;
   }
 
@@ -14,8 +14,8 @@ style.textContent = `
     }
     50% {
       box-shadow:
-        0 0 8px 2px #ff00ff,
-        0 0 16px 4px #9d00ff;
+        0 0 4px 1px rgba(255, 0, 255, 0.35),
+        0 0 8px 2px rgba(157, 0, 255, 0.25);
     }
   }
 `;
