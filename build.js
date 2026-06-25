@@ -4,7 +4,7 @@ import fs from 'node:fs';
 const watch = process.argv.includes('--watch');
 
 const buildOptions = {
-  entryPoints: ['src/index.ts'],
+  entryPoints: ['src/index.ts', 'src/options.ts'],
   bundle: true,
   outdir: 'dist',
   platform: 'browser',
@@ -16,6 +16,7 @@ const buildOptions = {
 function copyStatic() {
   fs.mkdirSync('dist', { recursive: true });
   fs.copyFileSync('manifest.json', 'dist/manifest.json');
+  fs.copyFileSync('src/options.html', 'dist/options.html');
 }
 
 async function run() {

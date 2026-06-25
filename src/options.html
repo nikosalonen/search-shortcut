@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Search Focus — Options</title>
+  <style>
+    body { font: 14px/1.5 system-ui, sans-serif; max-width: 380px; margin: 24px auto; padding: 0 16px; }
+    h1 { font-size: 18px; }
+    .row { margin: 16px 0; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; }
+    #shortcut { font: inherit; padding: 8px 12px; min-width: 160px; cursor: pointer; }
+    #hint { color: #b00; min-height: 1.2em; margin: 6px 0 0; }
+    #status { color: #2a7; margin-left: 8px; }
+    .glow-row label { font-weight: 400; }
+    #reset { background: none; border: none; color: #06c; cursor: pointer; padding: 0; }
+  </style>
+</head>
+<body>
+  <h1>Search Focus</h1>
+
+  <div class="row">
+    <label for="shortcut">Shortcut</label>
+    <button id="shortcut" type="button">Ctrl + K</button>
+    <p id="hint"></p>
+  </div>
+
+  <div class="row glow-row">
+    <label><input type="checkbox" id="glow" /> Show glow animation</label>
+  </div>
+
+  <div class="row">
+    <button id="reset" type="button">Reset to default</button>
+    <span id="status"></span>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

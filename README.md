@@ -35,6 +35,13 @@ A lightweight browser extension that enhances your web browsing experience by pr
 2. Press `Ctrl+K` (Windows/Linux) or `Cmd+K` (Mac)
 3. The nearest search input will be focused with a beautiful glow animation
 
+### Changing the shortcut
+
+Open the extension's options page (right-click the extension icon → **Options**, or
+`chrome://extensions/` → **Details** → **Extension options**). Click the shortcut
+field, press your preferred combination (at least one modifier plus a key), and it
+saves automatically. You can also toggle the glow animation or reset to the default.
+
 ## How It Works
 
 The extension uses a comprehensive set of selectors to find search inputs on web pages, including:
@@ -74,7 +81,10 @@ npm run dev
 ```
 search-shortcut/
 ├── src/
-│   └── index.ts       # Main extension code (content script)
+│   ├── index.ts       # Main extension code (content script)
+│   ├── settings.ts    # Shared settings: type, defaults, validation, matching, storage
+│   ├── options.html   # Options page markup
+│   └── options.ts     # Options page logic
 ├── dist/              # Built extension files (load this as unpacked extension)
 ├── build.js           # esbuild bundler config
 ├── manifest.json      # Extension manifest (V3)
