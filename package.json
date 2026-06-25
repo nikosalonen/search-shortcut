@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "scripts": {
     "build": "node build.js",
-    "dev": "tsc --watch & web-ext run --source-dir dist/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node build.js --watch & web-ext run --source-dir dist/",
+    "test": "node --test \"src/**/*.test.ts\""
   },
+  "type": "module",
   "keywords": [],
   "author": "Niko Salonen",
   "license": "MIT",
@@ -13,7 +14,7 @@
   "dependencies": {},
   "devDependencies": {
     "@types/node": "~24",
-    "typescript": "^5.9.3",
-    "esbuild": "^0.27.3"
+    "typescript": "^6.0.3",
+    "esbuild": "^0.28.1"
   }
 }

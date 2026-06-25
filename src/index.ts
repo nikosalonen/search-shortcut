@@ -1,21 +1,50 @@
+import {
+  loadSettings,
+  onSettingsChanged,
+  defaultSettings,
+  matches,
+  type Settings,
+} from './settings.ts';
+
 // Browser extension to focus on search inputs with keyboard shortcut
 
 // Add CSS for the pulse effect
 const style = document.createElement('style');
 style.textContent = `
   .search-focus-pulse {
-    animation: searchPulse 0.4s ease-in-out 3;
+    animation: searchWorm 0.8s linear 2;
     outline: none;
   }
 
-  @keyframes searchPulse {
-    0%, 100% {
-      box-shadow: 0 0 0 0 rgba(157, 0, 255, 0);
-    }
+  /* A tight bright "laser" dot circles the input with a 3-dot fading trail
+     behind it. Each keyframe = head at the current edge point, trail at the
+     previous points. Minimal blur keeps it a pointer, not a glow. */
+  @keyframes searchWorm {
+    0% { box-shadow: -11px -11px 4px 0 #ff5cf6, -12px 0 4px -1px rgba(255,61,240,.5), -11px 11px 5px -2px rgba(180,40,255,.28), 0 12px 6px -3px rgba(157,0,255,.12); }
+    12.5% { box-shadow: 0 -12px 4px 0 #ff5cf6, -11px -11px 4px -1px rgba(255,61,240,.5), -12px 0 5px -2px rgba(180,40,255,.28), -11px 11px 6px -3px rgba(157,0,255,.12); }
+    25% { box-shadow: 11px -11px 4px 0 #ff5cf6, 0 -12px 4px -1px rgba(255,61,240,.5), -11px -11px 5px -2px rgba(180,40,255,.28), -12px 0 6px -3px rgba(157,0,255,.12); }
+    37.5% { box-shadow: 12px 0 4px 0 #ff5cf6, 11px -11px 4px -1px rgba(255,61,240,.5), 0 -12px 5px -2px rgba(180,40,255,.28), -11px -11px 6px -3px rgba(157,0,255,.12); }
+    50% { box-shadow: 11px 11px 4px 0 #ff5cf6, 12px 0 4px -1px rgba(255,61,240,.5), 11px -11px 5px -2px rgba(180,40,255,.28), 0 -12px 6px -3px rgba(157,0,255,.12); }
+    62.5% { box-shadow: 0 12px 4px 0 #ff5cf6, 11px 11px 4px -1px rgba(255,61,240,.5), 12px 0 5px -2px rgba(180,40,255,.28), 11px -11px 6px -3px rgba(157,0,255,.12); }
+    75% { box-shadow: -11px 11px 4px 0 #ff5cf6, 0 12px 4px -1px rgba(255,61,240,.5), 11px 11px 5px -2px rgba(180,40,255,.28), 12px 0 6px -3px rgba(157,0,255,.12); }
+    87.5% { box-shadow: -12px 0 4px 0 #ff5cf6, -11px 11px 4px -1px rgba(255,61,240,.5), 0 12px 5px -2px rgba(180,40,255,.28), 11px 11px 6px -3px rgba(157,0,255,.12); }
+    100% { box-shadow: -11px -11px 4px 0 #ff5cf6, -12px 0 4px -1px rgba(255,61,240,.5), -11px 11px 5px -2px rgba(180,40,255,.28), 0 12px 6px -3px rgba(157,0,255,.12); }
+  }
+
+  /* Reduced-motion: a single still glow, no travel (still ends, so the class
+     is cleaned up via animationend). */
+  @keyframes searchGlow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(157, 0, 255, 0); }
     50% {
       box-shadow:
-        0 0 8px 2px #ff00ff,
-        0 0 16px 4px #9d00ff;
+        0 0 6px 2px rgba(255, 0, 255, 0.35),
+        0 0 10px 3px rgba(157, 0, 255, 0.25);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .search-focus-pulse {
+      animation: searchGlow 0.6s ease-in-out 1;
     }
   }
 `;
@@ -26,25 +55,34 @@ try {
   console.error('Failed to add search shortcut styles:', error);
 }
 
-// Content script that runs on web pages
+// Load user settings; start from platform defaults so the shortcut works
+// before storage resolves, then keep in sync with changes from the options page.
+let currentSettings: Settings = defaultSettings();
+loadSettings().then((s) => {
+  currentSettings = s;
+});
+onSettingsChanged((s) => {
+  currentSettings = s;
+});
+
 document.addEventListener('keydown', (event) => {
-  // Check for Ctrl+K or Cmd+K (common search shortcut)
-  if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+  if (matches(event, currentSettings)) {
     event.preventDefault(); // Prevent default browser behavior
 
-    // Try to find search input on the page
     const searchInput = findSearchInput();
 
     if (searchInput) {
       searchInput.focus();
 
-      searchInput.classList.add('search-focus-pulse');
+      if (currentSettings.glow) {
+        searchInput.classList.add('search-focus-pulse');
 
-      const removePulse = () => {
-        searchInput.classList.remove('search-focus-pulse');
-        searchInput.removeEventListener('animationend', removePulse);
-      };
-      searchInput.addEventListener('animationend', removePulse);
+        const removePulse = () => {
+          searchInput.classList.remove('search-focus-pulse');
+          searchInput.removeEventListener('animationend', removePulse);
+        };
+        searchInput.addEventListener('animationend', removePulse);
+      }
     }
   }
 });

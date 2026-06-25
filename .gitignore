@@ -2,3 +2,9 @@ node_modules/
 dist/
 .env
 .DS_Store
+# Packaged extension artifacts and signing key (never commit the key)
+*.crx
+*.pem
+*.zip
+# Added by code-review-graph
+.code-review-graph/

@@ -16,24 +16,30 @@ A lightweight browser extension that enhances your web browsing experience by pr
 ### Chrome/Edge/Brave
 1. Download the extension from the Chrome Web Store (coming soon)
 2. Or install manually:
-   - Clone this repository
+   - Clone this repository, then run `npm install && npm run build` to generate the `dist/` folder
    - Open Chrome/Edge/Brave and go to `chrome://extensions/`
    - Enable "Developer mode"
-   - Click "Load unpacked" and select the extension directory
+   - Click "Load unpacked" and select the `dist/` folder
 
 ### Firefox
 1. Download from Firefox Add-ons (coming soon)
 2. Or install manually:
-   - Clone this repository
+   - Clone this repository, then run `npm install && npm run build` to generate the `dist/` folder
    - Open Firefox and go to `about:debugging#/runtime/this-firefox`
    - Click "Load Temporary Add-on"
-   - Select any file in the extension directory
+   - Select `dist/manifest.json`
 
 ## Usage
 
 1. Visit any website
 2. Press `Ctrl+K` (Windows/Linux) or `Cmd+K` (Mac)
 3. The nearest search input will be focused with a beautiful glow animation
+
+### Changing the shortcut
+
+Open the settings by clicking the extension's toolbar icon (popup), or via right-click the extension icon → **Options** (or `chrome://extensions/` → **Details** → **Extension options**). Click the shortcut field, press your preferred combination (at least one modifier plus a key), and it saves automatically. You can also toggle the glow animation or reset to the default.
+
+> **Tip:** For *recording* a new shortcut, the full options page (open-in-tab) is the most reliable — a popup can close on focus loss while you're pressing keys. The popup is best for quickly toggling the glow or resetting.
 
 ## How It Works
 
@@ -74,7 +80,10 @@ npm run dev
 ```
 search-shortcut/
 ├── src/
-│   └── index.ts       # Main extension code (content script)
+│   ├── index.ts       # Main extension code (content script)
+│   ├── settings.ts    # Shared settings: type, defaults, validation, matching, storage
+│   ├── options.html   # Options page markup
+│   └── options.ts     # Options page logic
 ├── dist/              # Built extension files (load this as unpacked extension)
 ├── build.js           # esbuild bundler config
 ├── manifest.json      # Extension manifest (V3)
