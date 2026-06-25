@@ -43,6 +43,11 @@ test('validate: accepts a valid combo', () => {
   assert.equal(validate(ctrlK), true);
 });
 
+test('validate: rejects tampered storage with non-boolean flags', () => {
+  const tampered = { ...ctrlK, ctrl: 'yes' } as unknown as Settings;
+  assert.equal(validate(tampered), false);
+});
+
 test('pickPlatformDefault: mac -> meta, not ctrl', () => {
   const d = pickPlatformDefault('MacIntel');
   assert.equal(d.meta, true);

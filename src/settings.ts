@@ -35,6 +35,16 @@ export function defaultSettings(): Settings {
 
 export function validate(s: Settings): boolean {
   if (!s || typeof s.key !== 'string' || s.key.length !== 1) return false;
+  // Storage data is untrusted; reject anything whose flags aren't real booleans.
+  if (
+    typeof s.ctrl !== 'boolean' ||
+    typeof s.meta !== 'boolean' ||
+    typeof s.alt !== 'boolean' ||
+    typeof s.shift !== 'boolean' ||
+    typeof s.glow !== 'boolean'
+  ) {
+    return false;
+  }
   return s.ctrl || s.meta || s.alt || s.shift;
 }
 

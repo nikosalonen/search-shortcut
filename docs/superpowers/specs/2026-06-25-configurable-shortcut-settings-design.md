@@ -131,7 +131,13 @@ Wire `npm test` (`node --test`) into `ci.yml` alongside the existing
 - `manifest.json` references `options.html` (which loads `options.js`) and declares
   the `storage` permission.
 
+## Added during implementation (beyond the original scope)
+
+- Icons (16/48/128) for store publishing + toolbar — sourced from `assets/icon.svg`,
+  wired into the manifest (`icons` + `action.default_icon`) and copied by the build.
+- Settings UI also exposed as a toolbar popup (`action.default_popup`), not just the
+  options page.
+
 ## Out of scope / future
 
-- Icons (16/48/128) for store publishing — tracked separately; not part of this feature.
 - Cross-device sync, per-site rules, master on/off toggle.
