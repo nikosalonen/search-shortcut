@@ -44,7 +44,7 @@ export function matches(e: KeyEventLike, s: Settings): boolean {
     e.metaKey === s.meta &&
     e.altKey === s.alt &&
     e.shiftKey === s.shift &&
-    e.key.toLowerCase() === s.key
+    e.key.toLowerCase() === s.key.toLowerCase()
   );
 }
 
