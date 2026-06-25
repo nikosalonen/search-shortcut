@@ -1,20 +1,33 @@
-const esbuild = require('esbuild');
-const fs = require('node:fs');
+import * as esbuild from 'esbuild';
+import fs from 'node:fs';
 
-async function build() {
-  // Build TypeScript files
-  await esbuild.build({
-    entryPoints: ['src/index.ts'],
-    bundle: true,
-    outdir: 'dist',
-    platform: 'browser',
-    format: 'iife',
-    target: 'es2017',
-    minify: true,
-  });
+const watch = process.argv.includes('--watch');
 
-  // Copy manifest
+const buildOptions = {
+  entryPoints: ['src/index.ts'],
+  bundle: true,
+  outdir: 'dist',
+  platform: 'browser',
+  format: 'iife',
+  target: 'es2017',
+  minify: true,
+};
+
+function copyStatic() {
+  fs.mkdirSync('dist', { recursive: true });
   fs.copyFileSync('manifest.json', 'dist/manifest.json');
 }
 
-build().catch(() => process.exit(1));
+async function run() {
+  if (watch) {
+    const ctx = await esbuild.context(buildOptions);
+    await ctx.watch();
+    copyStatic();
+    console.log('esbuild: watching for changes...');
+  } else {
+    await esbuild.build(buildOptions);
+    copyStatic();
+  }
+}
+
+run().catch(() => process.exit(1));

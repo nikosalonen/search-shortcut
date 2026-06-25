@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "scripts": {
     "build": "node build.js",
-    "dev": "tsc --watch & web-ext run --source-dir dist/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node build.js --watch & web-ext run --source-dir dist/",
+    "test": "node --test \"src/**/*.test.ts\""
   },
+  "type": "module",
   "keywords": [],
   "author": "Niko Salonen",
   "license": "MIT",
