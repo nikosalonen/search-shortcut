@@ -39,6 +39,8 @@ A lightweight browser extension that enhances your web browsing experience by pr
 
 Open the settings by clicking the extension's toolbar icon (popup), or via right-click the extension icon → **Options** (or `chrome://extensions/` → **Details** → **Extension options**). Click the shortcut field, press your preferred combination (at least one modifier plus a key), and it saves automatically. You can also toggle the glow animation or reset to the default.
 
+> **Tip:** For *recording* a new shortcut, the full options page (open-in-tab) is the most reliable — a popup can close on focus loss while you're pressing keys. The popup is best for quickly toggling the glow or resetting.
+
 ## How It Works
 
 The extension uses a comprehensive set of selectors to find search inputs on web pages, including:
