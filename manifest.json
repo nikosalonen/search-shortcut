@@ -3,6 +3,7 @@
   "name": "Search Focus",
   "version": "1.0.0",
   "description": "Focus on search input with keyboard shortcut",
+  "permissions": ["storage"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

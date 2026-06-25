@@ -57,3 +57,34 @@ export function formatShortcut(s: Settings): string {
   parts.push(s.key.length === 1 ? s.key.toUpperCase() : s.key);
   return parts.join(' + ');
 }
+
+const STORAGE_KEY = 'settings';
+
+export function loadSettings(): Promise<Settings> {
+  return new Promise((resolve) => {
+    try {
+      chrome.storage.local.get(STORAGE_KEY, (items) => {
+        const stored = items[STORAGE_KEY] as Settings | undefined;
+        resolve(stored && validate(stored) ? stored : defaultSettings());
+      });
+    } catch {
+      resolve(defaultSettings());
+    }
+  });
+}
+
+export function saveSettings(s: Settings): Promise<void> {
+  return new Promise((resolve) => {
+    chrome.storage.local.set({ [STORAGE_KEY]: s }, () => resolve());
+  });
+}
+
+export function onSettingsChanged(cb: (s: Settings) => void): void {
+  chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName !== 'local') return;
+    const change = changes[STORAGE_KEY];
+    if (!change) return;
+    const next = change.newValue as Settings | undefined;
+    if (next && validate(next)) cb(next);
+  });
+}

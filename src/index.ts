@@ -1,3 +1,11 @@
+import {
+  loadSettings,
+  onSettingsChanged,
+  defaultSettings,
+  matches,
+  type Settings,
+} from './settings.ts';
+
 // Browser extension to focus on search inputs with keyboard shortcut
 
 // Add CSS for the pulse effect
@@ -26,25 +34,34 @@ try {
   console.error('Failed to add search shortcut styles:', error);
 }
 
-// Content script that runs on web pages
+// Load user settings; start from platform defaults so the shortcut works
+// before storage resolves, then keep in sync with changes from the options page.
+let currentSettings: Settings = defaultSettings();
+loadSettings().then((s) => {
+  currentSettings = s;
+});
+onSettingsChanged((s) => {
+  currentSettings = s;
+});
+
 document.addEventListener('keydown', (event) => {
-  // Check for Ctrl+K or Cmd+K (common search shortcut)
-  if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+  if (matches(event, currentSettings)) {
     event.preventDefault(); // Prevent default browser behavior
 
-    // Try to find search input on the page
     const searchInput = findSearchInput();
 
     if (searchInput) {
       searchInput.focus();
 
-      searchInput.classList.add('search-focus-pulse');
+      if (currentSettings.glow) {
+        searchInput.classList.add('search-focus-pulse');
 
-      const removePulse = () => {
-        searchInput.classList.remove('search-focus-pulse');
-        searchInput.removeEventListener('animationend', removePulse);
-      };
-      searchInput.addEventListener('animationend', removePulse);
+        const removePulse = () => {
+          searchInput.classList.remove('search-focus-pulse');
+          searchInput.removeEventListener('animationend', removePulse);
+        };
+        searchInput.addEventListener('animationend', removePulse);
+      }
     }
   }
 });
