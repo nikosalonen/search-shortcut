@@ -37,10 +37,7 @@ A lightweight browser extension that enhances your web browsing experience by pr
 
 ### Changing the shortcut
 
-Open the extension's options page (right-click the extension icon → **Options**, or
-`chrome://extensions/` → **Details** → **Extension options**). Click the shortcut
-field, press your preferred combination (at least one modifier plus a key), and it
-saves automatically. You can also toggle the glow animation or reset to the default.
+Open the settings by clicking the extension's toolbar icon (popup), or via right-click the extension icon → **Options** (or `chrome://extensions/` → **Details** → **Extension options**). Click the shortcut field, press your preferred combination (at least one modifier plus a key), and it saves automatically. You can also toggle the glow animation or reset to the default.
 
 ## How It Works
 

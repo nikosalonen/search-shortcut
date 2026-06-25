@@ -29,10 +29,14 @@ async function persist(): Promise<void> {
   }, 1500);
 }
 
-loadSettings().then((s) => {
-  settings = s;
-  render();
-});
+loadSettings()
+  .then((s) => {
+    settings = s;
+    render();
+  })
+  .catch((err) => {
+    console.error('Failed to load settings:', err);
+  });
 
 shortcutBtn.addEventListener('click', () => {
   recording = true;
