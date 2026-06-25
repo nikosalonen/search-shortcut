@@ -18,6 +18,7 @@ let recording = false;
 
 function render(): void {
   shortcutBtn.textContent = recording ? 'Press keys…' : formatShortcut(settings);
+  shortcutBtn.classList.toggle('recording', recording);
   glowBox.checked = settings.glow;
 }
 

@@ -12,18 +12,39 @@ import {
 const style = document.createElement('style');
 style.textContent = `
   .search-focus-pulse {
-    animation: searchPulse 0.5s ease-in-out 1;
+    animation: searchWorm 0.8s linear 2;
     outline: none;
   }
 
-  @keyframes searchPulse {
-    0%, 100% {
-      box-shadow: 0 0 0 0 rgba(157, 0, 255, 0);
-    }
+  /* A tight bright "laser" dot circles the input with a 3-dot fading trail
+     behind it. Each keyframe = head at the current edge point, trail at the
+     previous points. Minimal blur keeps it a pointer, not a glow. */
+  @keyframes searchWorm {
+    0% { box-shadow: -11px -11px 4px 0 #ff5cf6, -12px 0 4px -1px rgba(255,61,240,.5), -11px 11px 5px -2px rgba(180,40,255,.28), 0 12px 6px -3px rgba(157,0,255,.12); }
+    12.5% { box-shadow: 0 -12px 4px 0 #ff5cf6, -11px -11px 4px -1px rgba(255,61,240,.5), -12px 0 5px -2px rgba(180,40,255,.28), -11px 11px 6px -3px rgba(157,0,255,.12); }
+    25% { box-shadow: 11px -11px 4px 0 #ff5cf6, 0 -12px 4px -1px rgba(255,61,240,.5), -11px -11px 5px -2px rgba(180,40,255,.28), -12px 0 6px -3px rgba(157,0,255,.12); }
+    37.5% { box-shadow: 12px 0 4px 0 #ff5cf6, 11px -11px 4px -1px rgba(255,61,240,.5), 0 -12px 5px -2px rgba(180,40,255,.28), -11px -11px 6px -3px rgba(157,0,255,.12); }
+    50% { box-shadow: 11px 11px 4px 0 #ff5cf6, 12px 0 4px -1px rgba(255,61,240,.5), 11px -11px 5px -2px rgba(180,40,255,.28), 0 -12px 6px -3px rgba(157,0,255,.12); }
+    62.5% { box-shadow: 0 12px 4px 0 #ff5cf6, 11px 11px 4px -1px rgba(255,61,240,.5), 12px 0 5px -2px rgba(180,40,255,.28), 11px -11px 6px -3px rgba(157,0,255,.12); }
+    75% { box-shadow: -11px 11px 4px 0 #ff5cf6, 0 12px 4px -1px rgba(255,61,240,.5), 11px 11px 5px -2px rgba(180,40,255,.28), 12px 0 6px -3px rgba(157,0,255,.12); }
+    87.5% { box-shadow: -12px 0 4px 0 #ff5cf6, -11px 11px 4px -1px rgba(255,61,240,.5), 0 12px 5px -2px rgba(180,40,255,.28), 11px 11px 6px -3px rgba(157,0,255,.12); }
+    100% { box-shadow: -11px -11px 4px 0 #ff5cf6, -12px 0 4px -1px rgba(255,61,240,.5), -11px 11px 5px -2px rgba(180,40,255,.28), 0 12px 6px -3px rgba(157,0,255,.12); }
+  }
+
+  /* Reduced-motion: a single still glow, no travel (still ends, so the class
+     is cleaned up via animationend). */
+  @keyframes searchGlow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(157, 0, 255, 0); }
     50% {
       box-shadow:
-        0 0 4px 1px rgba(255, 0, 255, 0.35),
-        0 0 8px 2px rgba(157, 0, 255, 0.25);
+        0 0 6px 2px rgba(255, 0, 255, 0.35),
+        0 0 10px 3px rgba(157, 0, 255, 0.25);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .search-focus-pulse {
+      animation: searchGlow 0.6s ease-in-out 1;
     }
   }
 `;
