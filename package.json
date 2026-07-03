@@ -13,7 +13,7 @@
   "description": "Search shortcut browser extension",
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "~24",
+    "@types/node": "~26",
     "typescript": "^6.0.3",
     "esbuild": "^0.28.1"
   }
